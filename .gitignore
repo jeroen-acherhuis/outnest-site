@@ -1,3 +1,6 @@
 node_modules/
 .DS_Store
 *.log
+
+# DNS-backups blijven lokaal, deze repo is publiek
+build/dns-backup-*.txt

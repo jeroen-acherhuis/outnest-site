@@ -64,16 +64,36 @@ python3 -m http.server 4321
 
 ## Deployen
 
-Werkt op elke statische host. Voor Railway (zoals de andere Outnest-apps) zit
-`railway.json` + `server.js` er al in. Nieuw project, deze repo koppelen, klaar.
-Healthcheck staat op `/health`.
+**De site draait live op GitHub Pages**, vanaf de `main`-branch van deze repo.
+Push naar `main` en de site is binnen een minuut bijgewerkt. Daarom staat de
+repo publiek: op een gratis GitHub-plan werkt Pages alleen vanaf een publieke
+repo. `CNAME` legt het domein vast, `.nojekyll` slaat de Jekyll-stap over.
 
-Daarna bij de DNS van `outnest.eu` (nu nog geparkeerd bij vdx.nl) een `CNAME`
-naar de Railway-host zetten, of `A`-records als het apex-domein geen CNAME
-accepteert.
+De DNS staat bij TransIP en wijst sinds 17 augustus 2026 naar GitHub:
 
-Cloudflare Pages of Netlify kan ook: repo koppelen, geen build command,
-publish directory `/`. Dan is `server.js` niet nodig.
+```
+@    3600  A     185.199.108.153
+@    3600  A     185.199.109.153
+@    3600  A     185.199.110.153
+@    3600  A     185.199.111.153
+@    3600  AAAA  2606:50c0:8000::153
+@    3600  AAAA  2606:50c0:8001::153
+@    3600  AAAA  2606:50c0:8002::153
+@    3600  AAAA  2606:50c0:8003::153
+www  3600  CNAME jeroen-acherhuis.github.io.
+```
+
+Daarvoor stond er een enkel `A` naar `37.97.254.27` en een `AAAA` naar
+`2a01:7c8:3:1337::27`, allebei de parkeerpagina van TransIP.
+
+**Kom nooit aan de andere records.** Dit domein draagt de mail van het hele
+bedrijf: `MX` naar Google Workspace, `SPF`, `DMARC` en DKIM-records voor Google,
+SendGrid en Shopify. Ook `ops.outnest.eu` hangt eraan, dat is de Railway-app.
+Ga je toch iets wijzigen, gebruik dan eerst Bulkopties in het TransIP-paneel:
+daar zit "Herstel een vorige versie", wat een werkende terugrolknop is.
+
+`server.js` en `railway.json` zitten er nog in voor het geval de site ooit naar
+Railway moet. Voor GitHub Pages zijn ze niet in gebruik.
 
 ## Talen
 
