@@ -139,6 +139,32 @@ Om die reden staat de pijl in de webshopkaarten buiten de vertaalde span.
 python3 -c "from PIL import Image; Image.open('/tmp/og.png').convert('RGB').save('assets/og.jpg','JPEG',quality=84,optimize=True)"
 ```
 
+## Meten
+
+**Google Search Console** staat aan als domein-property `sc-domain:outnest.eu`.
+Die dekt http, https, www en alle subdomeinen in één. Verificatie ging
+automatisch via de Google-verificatie die al in de DNS stond, dus daar hoefde
+geen record voor bij. `sitemap.xml` is ingediend.
+
+**Google Analytics 4** zit in `index.html`, maar staat uit tot er een
+metings-ID is. Zoek in het bestand naar:
+
+```js
+var GA_ID = "";                      // vul hier de G-... metings-ID in
+```
+
+Zolang die leeg is laadt er geen Google-script en verschijnt de cookiemelding
+niet. Vul je de `G-...` in, dan gaat de melding aan.
+
+De opzet is toestemming-eerst, en dat is geen keuze maar een eis: GA4 zet
+cookies en de site richt zich op Nederland, België en Duitsland. Consent Mode
+staat standaard op `denied` voor alles wat met analytics en advertenties te
+maken heeft, `gtag.js` wordt pas ingeladen nadat iemand op Akkoord klikt, en de
+keuze blijft in `localStorage` staan. Wie weigert, wordt niet gemeten.
+
+Zet dus nooit een kale `gtag.js` in de `<head>`; dan meet je vóór toestemming
+en dat mag niet.
+
 ## Gecontroleerde bedrijfsgegevens
 
 Overgenomen uit het Impressum van de Shopify-shop, niet zelf verzonnen:
