@@ -1,0 +1,12 @@
+{
+  "name": "outnest-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Merksite voor Outnest (Oude Wesselink Tuinmeubelen B.V.) op outnest.eu",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
