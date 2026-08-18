@@ -1,0 +1,46 @@
+{
+  "_wat": "Snapshot van het Shopify-footermenu 'Oude Wesselink' (kolom 'Over Oude Wesselink') vlak voor het toevoegen van de outnest.eu-link, 18 augustus 2026.",
+  "_waarom": "update_menu vervangt de hele itemlijst en maakt nieuwe item-ids aan. Duitse vertalingen hangen aan die ids en gaan daarbij verloren. Hiermee kan alles hersteld worden.",
+  "menu": {
+    "id": "gid://shopify/Menu/320774668626",
+    "handle": "klantenservice",
+    "title_nl": "Oude Wesselink",
+    "title_de": "Gartenmöbel für Dich"
+  },
+  "items": [
+    {
+      "id": "gid://shopify/MenuItem/783943237970",
+      "title_nl": "Inspiratie & Onderhoud",
+      "title_de": "Inspiration & Pflege",
+      "type": "BLOG",
+      "url": "/blogs/inspiratie",
+      "resource_id": "gid://shopify/Blog/126867407186"
+    },
+    {
+      "id": "gid://shopify/MenuItem/784588210514",
+      "title_nl": "Showroom & Contact",
+      "title_de": "Showroom & Kontakt",
+      "type": "PAGE",
+      "url": "/pages/showroomencontact",
+      "resource_id": "gid://shopify/Page/165723799890"
+    },
+    {
+      "id": "gid://shopify/MenuItem/789928411474",
+      "title_nl": "Impressum",
+      "title_de": "Impressum",
+      "type": "PAGE",
+      "url": "/pages/impressum",
+      "resource_id": "gid://shopify/Page/169743155538"
+    }
+  ],
+  "_na_wijziging_2026_08_18": {
+    "wat": "Item 'Over Outnest' toegevoegd, link naar https://outnest.eu/. Alle item-ids zijn hierbij vernieuwd en de Duitse titels opnieuw gezet.",
+    "nieuwe_ids": {
+      "Inspiratie & Onderhoud / Inspiration & Pflege": "gid://shopify/MenuItem/826759676242",
+      "Showroom & Contact / Showroom & Kontakt": "gid://shopify/MenuItem/826759709010",
+      "Impressum / Impressum": "gid://shopify/MenuItem/826759741778",
+      "Over Outnest / Über Outnest": "gid://shopify/MenuItem/826759774546"
+    },
+    "les": "update_menu stuurt geen item-ids mee, dus Shopify maakt nieuwe items aan en de vertalingen die aan de oude ids hingen verdwijnen. Leg ze vooraf vast en zet ze er direct daarna weer op."
+  }
+}
