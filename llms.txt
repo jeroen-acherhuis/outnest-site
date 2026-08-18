@@ -1,0 +1,30 @@
+# Outnest
+
+> Outnest is het merk van Oude Wesselink Tuinmeubelen B.V. uit Enter, Overijssel,
+> Nederland. Het bedrijf verkoopt tuinmeubelen rechtstreeks aan consumenten via
+> twee eigen webshops en heeft een showroom en magazijn op één adres.
+
+Outnest is geen webshop. Wie wil kopen, gaat naar een van de twee winkels hieronder.
+
+## Webshops
+- [ikwiltuinmeubelen.nl](https://ikwiltuinmeubelen.nl): Nederlandstalige webshop, bezorging in Nederland en België.
+- [gartenmoebelfuerdich.de](https://gartenmoebelfuerdich.de): Duitstalige webshop, bezorging in heel Duitsland.
+
+## Deze site
+- [Nederlands](https://outnest.eu/)
+- [Duits](https://outnest.eu/de/)
+- [Engels](https://outnest.eu/en/)
+
+## Bedrijfsgegevens
+- Rechtspersoon: Oude Wesselink Tuinmeubelen B.V.
+- Merk: Outnest
+- Adres: De Bleek 2, 7468 DL Enter, Nederland
+- KvK: 61413585
+- BTW: NL854331712B01
+- Klantenservice Nederland en België: 0546 633 464, info@ikwiltuinmeubelen.nl
+- Klantenservice Duitsland: +49 5941 7964999, info@gartenmoebelfuerdich.de
+
+## Werkwijze
+- Inkoop per container rechtstreeks bij de fabrikant, zonder tussenhandel.
+- Eigen magazijn in Enter, eigen routeplanning en bezorging met eigen mensen.
+- Voorraad, inkoop, routeplanning en bezorging draaien op zelfgebouwde software.

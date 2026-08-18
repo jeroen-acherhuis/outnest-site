@@ -14,7 +14,12 @@ Eén statische pagina, geen build-stap, geen dependencies. Alles staat in
 `index.html` (HTML + CSS + een klein stukje JS).
 
 ```
-index.html          de hele site
+index.html          Nederlandse pagina, tevens de bron voor de vertalingen
+de/index.html       gegenereerd, niet met de hand aanpassen
+en/index.html       gegenereerd, niet met de hand aanpassen
+build/generate.py   maakt de/ en en/ uit index.html
+build/translations.json  Duitse en Engelse teksten
+llms.txt            samenvatting voor AI-zoekmachines
 assets/fonts.css    @font-face-regels, verwijzen lokaal
 assets/fonts/*.woff2 Fraunces + DM Sans, zelf gehost
 assets/logo-outnest.svg  logo met fill="currentColor"
@@ -97,38 +102,41 @@ Railway moet. Voor GitHub Pages zijn ze niet in gebruik.
 
 ## Talen
 
-NL / DE / EN via de knoppen rechtsboven.
+Drie echte pagina's, geen JavaScript-schakelaar:
 
-De **Nederlandse tekst staat in de HTML zelf**, zodat zoekmachines en
-bezoekers zonder JavaScript altijd een volledige pagina zien. Het script
-leest die tekst één keer uit als NL-woordenboek en wisselt hem om voor DE/EN.
-De keuze wordt onthouden in `localStorage`; zonder keuze volgt hij de
-browsertaal.
+| URL | taal |
+|---|---|
+| `/` | Nederlands |
+| `/de/` | Duits |
+| `/en/` | Engels |
 
-Tekst aanpassen:
+Dat is bewust zo. Eerder stonden alle talen op één URL en wisselde JavaScript
+de tekst om. Zoekmachines zagen daardoor alleen de Nederlandse versie; de
+Duitse en Engelse tekst zat wel in de pagina, maar in een `<script>` en dus
+niet als indexeerbare inhoud. Nu heeft elke taal een eigen URL, verwijzen ze
+met `hreflang` naar elkaar, en zijn de taalknoppen gewone links die Google kan
+volgen.
 
-NL pas je direct in `index.html` aan, bij het element met `data-i18n="..."`.
-DE en EN staan in het `DICT`-object onder in `index.html`, bij dezelfde sleutel.
-
-Elk element met een `data-i18n` moet in beide woordenboeken een sleutel hebben.
-Controleren:
+**`index.html` is de bron.** Daar staat de Nederlandse tekst in. De andere twee
+pagina's worden eruit gegenereerd:
 
 ```bash
-python3 - <<'PY'
-import re
-h=open('index.html').read()
-keys=set(re.findall(r'data-i18n(?:-html)?="([^"]+)"',h))
-js=re.search(r'var DICT = \{(.*?)\n  \};',h,re.S).group(0)
-for lang in ('de','en'):
-    have=set(re.findall(r'"([\w.]+)":',js.split('    '+lang+': {')[1].split('\n    }')[0]))
-    print(lang,'mist:',sorted(keys-have) or 'niets')
-PY
+python3 build/generate.py
 ```
 
-Gebruik `data-i18n-html` alleen waar de tekst opmaak bevat (nu enkel de
-`<strong>` in de hero). `data-i18n` overschrijft `textContent`, dus zet er
-nooit een icoon of link ín, die raak je dan kwijt bij het wisselen van taal.
-Om die reden staat de pijl in de webshopkaarten buiten de vertaalde span.
+Tekst aanpassen gaat zo. Nederlands wijzig je in `index.html`, bij het element
+met `data-i18n="..."`. Duits en Engels staan in `build/translations.json` onder
+dezelfde sleutel. Daarna het script draaien, anders lopen `/de/` en `/en/`
+achter. Het script waarschuwt als een sleutel in een taal ontbreekt.
+
+Kom niet met de hand aan `de/index.html` of `en/index.html`; die worden
+overschreven.
+
+Let op bij het toevoegen van teksten met opmaak erin: de generator zoekt het
+bijbehorende sluittag door nesting te tellen, juist omdat de hero-tekst een
+`<strong>` bevat. Zet nooit een icoon of link binnen een `data-i18n`-element,
+want de hele inhoud wordt vervangen. Daarom staat de pijl in de webshopkaarten
+buiten de vertaalde `<span>`.
 
 ## og.jpg opnieuw maken
 
@@ -165,6 +173,29 @@ keuze blijft in `localStorage` staan. Wie weigert, wordt niet gemeten.
 
 Zet dus nooit een kale `gtag.js` in de `<head>`; dan meet je vóór toestemming
 en dat mag niet.
+
+## SEO
+
+Wat er staat, en waarom:
+
+Elke taal heeft een eigen URL met eigen `title`, `description`, `canonical` en
+`og:locale`, en alle drie verwijzen met `hreflang` naar elkaar plus een
+`x-default` naar het Nederlands. `sitemap.xml` bevat alle drie de URLs met
+diezelfde hreflang-annotaties.
+
+De structured data is een `@graph` met drie nodes: `Organization` (met `vatID`
+en `taxID`, dat koppelt het domein aan het KvK-nummer), `WebSite`, en
+`FurnitureStore` voor de showroom aan De Bleek 2. Openingstijden staan er
+bewust niet in, die worden op de shop onderhouden en zijn hier niet
+geverifieerd.
+
+De hero is een CSS-achtergrond en wordt daardoor pas ontdekt nadat de CSS is
+geparsed. Er staat daarom een `preload` op, met een `media`-conditie zodat
+mobiel de kleine versie voorlaadt en desktop de grote. Vervang je de
+hero-afbeelding, pas dan ook die twee preload-regels aan.
+
+`llms.txt` staat in de root voor AI-zoekmachines. Houd die in lijn met de
+pagina als er iets aan de bedrijfsgegevens verandert.
 
 ## Gecontroleerde bedrijfsgegevens
 
