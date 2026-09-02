@@ -152,7 +152,30 @@ python3 -c "from PIL import Image; Image.open('/tmp/og.png').convert('RGB').save
 **Google Search Console** staat aan als domein-property `sc-domain:outnest.eu`.
 Die dekt http, https, www en alle subdomeinen in één. Verificatie ging
 automatisch via de Google-verificatie die al in de DNS stond, dus daar hoefde
-geen record voor bij. `sitemap.xml` is ingediend.
+geen record voor bij.
+
+Stand op 2 september 2026, twee weken na livegang: **3 pagina's geïndexeerd**
+(`/`, `/de/`, `/en/`), 165 vertoningen, 6 klikken, gemiddelde positie 16,3.
+Bij "niet geïndexeerd" staan 3 URLs met reden "uitgesloten door tag noindex":
+dat zijn `http://outnest.eu/`, `http://www.outnest.eu/` en
+`https://www.outnest.eu/`, laatst gecrawld op 1 juni en 7 augustus, dus toen
+het domein nog op de parkeerpagina van TransIP stond. Die pagina had zelf
+`noindex`. Alle drie leiden nu met een 301 naar `https://outnest.eu/`, dus dat
+lost zichzelf op bij de volgende crawl. Geen actie nodig.
+
+**Twee sitemap-paden, en dat is met opzet.** `sitemap.xml` werd door Google
+één keer gelezen op 18 augustus, precies in het kwartier waarin de site naar
+HTTPS omging, en kreeg toen geen geldig XML terug. Search Console hield die
+leesfout twee weken vast: opnieuw indienen op hetzelfde pad verandert niets,
+een variant met querystring wordt genormaliseerd naar dezelfde vermelding, en
+er is geen verwijderknop. De enige uitweg is een nieuw pad, dus staat de
+sitemap ook op `sitemap-pages.xml`. Beide bestanden worden door
+`build/generate.py` uit dezelfde lijst geschreven en `robots.txt` noemt ze
+allebei, zodat ze niet uit elkaar kunnen lopen.
+
+Let op bij het indienen van een sitemap: doe het pas nadat de deploy klaar is.
+Dien je een URL in die nog 404 geeft, dan wordt hij stil geweigerd zonder
+foutmelding. En een domein-property eist de volledige URL, niet alleen het pad.
 
 **Google Analytics 4** meet sinds 18 augustus 2026 op property `outnest.eu`
 in het GA-account `Outnest`, webstream "Merksite outnest.eu", metings-ID
