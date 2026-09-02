@@ -108,6 +108,42 @@ def vertaal(html: str, woorden: dict, taal: str, titel: str) -> str:
     return html
 
 
+
+SITEMAP_PADEN = ("sitemap.xml", "sitemap-pages.xml")
+
+
+def schrijf_sitemaps():
+    """Schrijft de sitemap naar meerdere paden vanuit één definitie.
+
+    Twee paden omdat Google de status van een sitemap-URL blijvend kan
+    vasthouden na één mislukte leespoging: opnieuw indienen op hetzelfde pad
+    doet niets, en een variant met querystring wordt genormaliseerd. Een nieuw
+    pad is de enige manier om een verse leespoging te forceren. Beide bestanden
+    komen hier uit dezelfde lijst, zodat ze niet uit elkaar kunnen lopen.
+    """
+    alts = "".join(
+        f'\n    <xhtml:link rel="alternate" hreflang="{t}" href="{SITE}{PAD[t]}"/>'
+        for t in ("nl", "de", "en")
+    ) + f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{PAD["nl"]}"/>'
+
+    blokken = []
+    for taal, prio in (("nl", "1.0"), ("de", "0.8"), ("en", "0.8")):
+        blokken.append(
+            f"  <url>\n    <loc>{SITE}{PAD[taal]}</loc>{alts}"
+            f"\n    <changefreq>monthly</changefreq>\n    <priority>{prio}</priority>\n  </url>"
+        )
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
+        '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+        + "\n".join(blokken)
+        + "\n</urlset>\n"
+    )
+    for naam in SITEMAP_PADEN:
+        (ROOT / naam).write_text(xml)
+        print(f"  {naam} geschreven ({len(blokken)} urls)")
+
+
 def main():
     bron = (ROOT / "index.html").read_text()
     vert = json.loads((ROOT / "build" / "translations.json").read_text())
@@ -117,6 +153,7 @@ def main():
         uit = vertaal(bron, vert[taal], taal, vert["titles"][taal])
         (map_ / "index.html").write_text(uit)
         print(f"  {taal}/index.html geschreven ({len(uit)} tekens)")
+    schrijf_sitemaps()
 
 
 if __name__ == "__main__":
